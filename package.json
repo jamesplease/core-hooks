@@ -1,0 +1,27 @@
+{
+  "name": "core-hooks",
+  "version": "0.0.1",
+  "description": "A collection of commonly-used custom React Hooks.",
+  "main": "src/core-hooks.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jamesplease/core-hooks.git"
+  },
+  "keywords": [
+    "react",
+    "hooks",
+    "hook"
+  ],
+  "author": "James Smith",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jamesplease/core-hooks/issues"
+  },
+  "homepage": "https://github.com/jamesplease/core-hooks#readme",
+  "peerDependencies": {
+    "react": "^16.8.0"
+  }
+}
