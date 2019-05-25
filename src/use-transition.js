@@ -12,7 +12,7 @@ export default function useTransition({
   if (typeof onEnteringTimeout === 'number') {
     enterTimeoutToUse = onEnteringTimeout;
   } else {
-    enterTimeoutToUse = Boolean(onEnteringTimeout) ? DEFAULT_RENDER_TIMELINE : 0;
+    enterTimeoutToUse = onEnteringTimeout ? DEFAULT_RENDER_TIMELINE : 0;
   }
 
   // We track all of our state on one object. This is to prevent strange issues

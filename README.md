@@ -30,10 +30,13 @@ yarn add core-hooks
 - [useCurrentRef](#use-current-ref)
 - [useTransition](#use-transition)
 
-### `useOnChange( callback, value )`
+### `useOnChange( callback, value, [comparator] )`
 
 A hook that calls `callback` anytime that `value` changes. `callback` is
 called with two arguments: `(currentValue, previousValue)`.
+
+Pass a `comparator` function to customize the comparison. It is called with two values,
+`currentValue` and `previousValue`. The default comparison is a strict equals (`===`).
 
 This hook does not return any value.
 
@@ -57,7 +60,7 @@ import { usePrevious } from 'core-hooks';
 const prevState = usePrevious(state);
 ```
 
-> Note: if you want to detect _when_ a value changes, then you may wish to use
+> Note: if you wish to detect _when_ a value changes, then you may want to consider
 > [useOnChange](#use-on-change) instead.
 
 ### `useIsMounted()`
@@ -110,18 +113,21 @@ function MyComponent({ renderChildren }) {
     // `shouldMount` and `useActiveClass` booleans being flipped to `true`, so that
     // your mount CSS transition animates properly.
     // If you are not using CSS transitions, then you do not need to pass this option.
-    onEnteringTimeout: true
+    onEnteringTimeout: true,
   });
 
   return (
     <>
       {shouldMount && (
-        <div className={classnames('myDiv', {
-          'myDiv-active': useActiveClass
-        })}>This div animates in and out</div>
+        <div
+          className={classnames('myDiv', {
+            'myDiv-active': useActiveClass,
+          })}>
+          This div animates in and out
+        </div>
       )}
     </>
-  )
+  );
 }
 ```
 

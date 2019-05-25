@@ -1,12 +1,16 @@
 import { useEffect } from 'react';
-import usePrevious from './use-previous';
+import { usePrevious } from './use-previous';
 
-export default function useOnChange(callback, val) {
+function isEqual(a, b) {
+  return a === b;
+}
+
+export default function useChange(val, callback, comparator = isEqual) {
   const previous = usePrevious(val);
 
   useEffect(() => {
-    if (typeof previous !== 'undefined' && val !== previous) {
+    if (!comparator(val, previous)) {
       callback(val, previous);
     }
-  }, [val, previous]);
+  }, [val, previous, comparator, callback]);
 }
