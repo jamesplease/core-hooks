@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { usePrevious } from './use-previous';
+import usePrevious from './use-previous';
 
 function isEqual(a, b) {
   return a === b;

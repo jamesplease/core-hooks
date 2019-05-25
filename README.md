@@ -6,7 +6,7 @@ A small collection of commonly-used custom [React Hooks](https://reactjs.org/doc
 
 I regularly find myself reusing the same custom hooks in all of my projects, so I abstracted them into a library.
 
-This library is intended to remain small.
+This collection of hooks is intended to remain reasonably sized.
 
 ## Installation
 
@@ -87,7 +87,7 @@ const [state, setState] = useState();
 const stateRef = useCurrentRef(state);
 ```
 
-### `useTransition({ shouldBeMounted, transitionDurationMs [, onEnteringTimeout] })`
+### `useTransition({ shouldBeMounted, transitionDurationMs, [onEnteringTimeout] })`
 
 A hook that allows you to create transitions between two states. Common use cases are:
 
@@ -131,6 +131,6 @@ function MyComponent({ renderChildren }) {
 }
 ```
 
-> Note: This can be viewed as a Hook replacement of the react-transition-group
+> Note: This can be considered a Hook replacement of the react-transition-group
 > [`Transition` component](https://reactcommunity.org/react-transition-group/transition),
 > but _not_ for the [`TransitionGroup` component](https://reactcommunity.org/react-transition-group/transition-group).

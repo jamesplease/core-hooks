@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import useIsRendered from './use-is-rendered';
+import useIsMounted from './use-is-mounted';
 
 const DEFAULT_RENDER_TIMELINE = 35;
 
@@ -41,7 +41,7 @@ export default function useTransition({
   // We need to keep track of whether we have been rendered or not. Otherwise,
   // this this will try and unmount something that was never mounted the first time
   // the hook is called.
-  const isRendered = useIsRendered();
+  const isRendered = useIsMounted();
 
   // This is the time when the latest enter transition began. We use it to
   // determine how much time would be necessary to transition out if the enter
