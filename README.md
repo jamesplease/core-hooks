@@ -6,7 +6,7 @@ A small collection of commonly-used custom [React Hooks](https://reactjs.org/doc
 
 I regularly find myself reusing the same custom hooks in all of my projects, so I abstracted them into a library.
 
-This library is intended to remain small.
+This collection of hooks is intended to remain reasonably sized.
 
 ## Installation
 
@@ -30,10 +30,13 @@ yarn add core-hooks
 - [useCurrentRef](#use-current-ref)
 - [useTransition](#use-transition)
 
-### `useOnChange( callback, value )`
+### `useOnChange( callback, value, [comparator] )`
 
 A hook that calls `callback` anytime that `value` changes. `callback` is
 called with two arguments: `(currentValue, previousValue)`.
+
+Pass a `comparator` function to customize the comparison. It is called with two values,
+`currentValue` and `previousValue`. The default comparison is a strict equals (`===`).
 
 This hook does not return any value.
 
@@ -57,7 +60,7 @@ import { usePrevious } from 'core-hooks';
 const prevState = usePrevious(state);
 ```
 
-> Note: if you want to detect _when_ a value changes, then you may wish to use
+> Note: if you wish to detect _when_ a value changes, then you may want to consider
 > [useOnChange](#use-on-change) instead.
 
 ### `useIsMounted()`
@@ -84,7 +87,7 @@ const [state, setState] = useState();
 const stateRef = useCurrentRef(state);
 ```
 
-### `useTransition({ shouldBeMounted, transitionDurationMs [, onEnteringTimeout] })`
+### `useTransition({ shouldBeMounted, transitionDurationMs, [onEnteringTimeout] })`
 
 A hook that allows you to create transitions between two states. Common use cases are:
 
@@ -110,21 +113,24 @@ function MyComponent({ renderChildren }) {
     // `shouldMount` and `useActiveClass` booleans being flipped to `true`, so that
     // your mount CSS transition animates properly.
     // If you are not using CSS transitions, then you do not need to pass this option.
-    onEnteringTimeout: true
+    onEnteringTimeout: true,
   });
 
   return (
     <>
       {shouldMount && (
-        <div className={classnames('myDiv', {
-          'myDiv-active': useActiveClass
-        })}>This div animates in and out</div>
+        <div
+          className={classnames('myDiv', {
+            'myDiv-active': useActiveClass,
+          })}>
+          This div animates in and out
+        </div>
       )}
     </>
-  )
+  );
 }
 ```
 
-> Note: This can be viewed as a Hook replacement of the react-transition-group
+> Note: This can be considered a Hook replacement of the react-transition-group
 > [`Transition` component](https://reactcommunity.org/react-transition-group/transition),
 > but _not_ for the [`TransitionGroup` component](https://reactcommunity.org/react-transition-group/transition-group).
