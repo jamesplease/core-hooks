@@ -19,6 +19,11 @@
     "hooks",
     "hook"
   ],
+  "files": [
+    "dist",
+    "lib",
+    "es"
+  ],
   "author": "James Smith",
   "license": "MIT",
   "bugs": {
