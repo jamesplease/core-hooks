@@ -13,14 +13,14 @@ export default function useChange(val, callback, comparator = isEqual) {
     if (process.env.NODE_ENV !== 'production') {
       if (typeof callback !== 'function') {
         warning(
-          `A non-function callback was passed to the useChange hook. callback must be a function`,
+          `A non-function callback was passed to the useChange hook. callback must be a function.`,
           'useOnChange_invalidCallback'
         );
       }
 
       if (typeof comparator !== 'function') {
         warning(
-          `A non-function comparator was passed to the useChange hook. comparator must be a function`,
+          `A non-function comparator was passed to the useChange hook. comparator must be a function.`,
           'useOnChange_invalidComparator'
         );
       }
