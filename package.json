@@ -2,8 +2,12 @@
   "name": "core-hooks",
   "version": "0.0.3",
   "description": "A collection of commonly-used custom React Hooks.",
-  "main": "src/index.js",
+  "main": "dist/index.js",
+  "browser": "lib/index.js",
+  "module": "es/index.js",
   "scripts": {
+    "clean": "rimraf dist es tmp lib",
+    "build": "npm run clean && rollup -c",
     "test": "jest"
   },
   "repository": {
@@ -34,6 +38,12 @@
     "jest": "^24.8.0",
     "react": "^16.8.6",
     "react-hooks-testing-library": "^0.5.0",
-    "react-test-renderer": "^16.8.6"
+    "react-test-renderer": "^16.8.6",
+    "rimraf": "^2.6.3",
+    "rollup": "^1.12.3",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-commonjs": "^10.0.0",
+    "rollup-plugin-node-resolve": "^5.0.0",
+    "rollup-plugin-replace": "^2.2.0"
   }
 }
