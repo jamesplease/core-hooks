@@ -1,7 +1,30 @@
 import { renderHook } from 'react-hooks-testing-library';
 import { useOnChange } from '../src';
+import { warning } from '../src/warning';
 
 describe('useOnChange()', () => {
+  it('warns when an invalid callback is passed', () => {
+    renderHook(({ value }) => useOnChange(value, true), {
+      initialProps: {
+        value: 'sandwiches',
+      },
+    });
+
+    expect(warning).toHaveBeenCalledTimes(1);
+    expect(warning.mock.calls[0][1]).toEqual('useOnChange_invalidCallback');
+  });
+
+  it('warns when an invalid comparator is passed', () => {
+    renderHook(({ value }) => useOnChange(value, () => {}, false), {
+      initialProps: {
+        value: 'sandwiches',
+      },
+    });
+
+    expect(warning).toHaveBeenCalledTimes(1);
+    expect(warning.mock.calls[0][1]).toEqual('useOnChange_invalidComparator');
+  });
+
   it('should call the callback when a primitive value changes', () => {
     const myMock = jest.fn();
 
@@ -34,6 +57,8 @@ describe('useOnChange()', () => {
     expect(myMock.mock.calls.length).toBe(2);
     expect(myMock.mock.calls[1][0]).toBe('ok');
     expect(myMock.mock.calls[1][1]).toBe('sandwiches');
+
+    expect(warning).toHaveBeenCalledTimes(0);
   });
 
   it('supports a custom comparator', () => {
@@ -99,5 +124,7 @@ describe('useOnChange()', () => {
       id: 'a',
       attributes: {},
     });
+
+    expect(warning).toHaveBeenCalledTimes(0);
   });
 });
