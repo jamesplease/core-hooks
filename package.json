@@ -1,6 +1,6 @@
 {
   "name": "core-hooks",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A collection of commonly-used custom React Hooks.",
   "main": "src/core-hooks.js",
   "scripts": {
