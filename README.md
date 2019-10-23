@@ -30,7 +30,7 @@ yarn add core-hooks
 - [useCurrentRef](#use-current-ref)
 - [useTransition](#use-transition)
 
-### `useOnChange( callback, value, [comparator] )`
+### `useOnChange( value, callback, [comparator] )`
 
 A hook that calls `callback` anytime that `value` changes. `callback` is
 called with two arguments: `(currentValue, previousValue)`.
@@ -43,11 +43,11 @@ This hook does not return any value.
 ```js
 import { useOnChange } from 'core-hooks';
 
-useOnChange((isVisible, wasVisible) => {
+useOnChange(isVisible, (isVisible, wasVisible) => {
   if (isVisible && !wasVisible) {
     console.log('It just became visible.');
   }
-}, isVisible);
+});
 ```
 
 ### `usePrevious( value )`
