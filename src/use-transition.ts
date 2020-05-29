@@ -1,19 +1,36 @@
 import { useState, useEffect, useRef } from 'react';
+import useCurrentRef from './use-current-ref';
 import useIsMounted from './use-is-mounted';
 
-const DEFAULT_RENDER_TIMELINE = 35;
+const RENDER_TIMEOUT = 35;
+
+interface UseTransitionOptions {
+  shouldBeMounted: boolean;
+  transitionDurationMs?: number;
+  onEnter?: () => void;
+  onLeave?: () => void;
+  onEnteringTimeout?: number;
+}
 
 export default function useTransition({
   shouldBeMounted,
   transitionDurationMs,
-  onEnteringTimeout = 0,
-}) {
-  let enterTimeoutToUse;
+  onEnter,
+  onLeave,
+
+  onEnteringTimeout = RENDER_TIMEOUT,
+}: UseTransitionOptions) {
+  let enterTimeoutToUse = 0;
   if (typeof onEnteringTimeout === 'number') {
     enterTimeoutToUse = onEnteringTimeout;
   } else {
-    enterTimeoutToUse = onEnteringTimeout ? DEFAULT_RENDER_TIMELINE : 0;
+    enterTimeoutToUse = Boolean(onEnteringTimeout) ? RENDER_TIMEOUT : 0;
   }
+
+  const optionsRef = useCurrentRef({
+    onEnter,
+    onLeave,
+  });
 
   // We track all of our state on one object. This is to prevent strange issues
   // that can occur when they update as independent state values.
@@ -29,8 +46,8 @@ export default function useTransition({
 
   // This is just a li'l utility to make it easier to update our state.
   // This exists because `useState` doesn't merge the new with the old.
-  function mergeNewState(newState) {
-    return prevState => {
+  function mergeNewState(newState: any) {
+    return (prevState: any) => {
       return {
         ...prevState,
         ...newState,
@@ -46,12 +63,12 @@ export default function useTransition({
   // This is the time when the latest enter transition began. We use it to
   // determine how much time would be necessary to transition out if the enter
   // transition is interrupted by a `shouldBeMounted: false`
-  const startTimeMs = useRef();
+  const startTimeMs = useRef<number | null>(null);
 
   // Timeout references
-  const onCallEnterTimeoutRef = useRef();
-  const onEnterTimeoutRef = useRef();
-  const onExitTimeoutRef = useRef();
+  const onCallEnterTimeoutRef = useRef<number>();
+  const onEnterTimeoutRef = useRef<number>();
+  const onExitTimeoutRef = useRef<number>();
 
   useEffect(() => {
     // When this component unmounts, we clear out all of the timers
@@ -75,7 +92,6 @@ export default function useTransition({
     );
   }, [shouldBeMounted]);
 
-  // Heads up! This hook may be using stale variables.
   useEffect(
     () => {
       if (isRendered && !transitionState.shouldBeMounted) {
@@ -96,12 +112,16 @@ export default function useTransition({
           })
         );
 
-        onExitTimeoutRef.current = setTimeout(() => {
+        onExitTimeoutRef.current = window.setTimeout(() => {
           updateTransitionState(
             mergeNewState({
               shouldRender: false,
             })
           );
+
+          if (typeof optionsRef.current.onLeave === 'function') {
+            optionsRef.current.onLeave();
+          }
         }, closeDuration);
       } else if (transitionState.shouldBeMounted) {
         clearTimeout(onExitTimeoutRef.current);
@@ -113,7 +133,7 @@ export default function useTransition({
             })
           );
 
-          onEnterTimeoutRef.current = setTimeout(() => {
+          onEnterTimeoutRef.current = window.setTimeout(() => {
             updateTransitionState(
               mergeNewState({
                 useActiveClass: true,
@@ -131,15 +151,18 @@ export default function useTransition({
           );
         }
 
-        onCallEnterTimeoutRef.current = setTimeout(() => {
+        onCallEnterTimeoutRef.current = window.setTimeout(() => {
           // TODO: Actually call this onEnter callback
-          // onEnter();
+          if (typeof optionsRef.current.onEnter === 'function') {
+            optionsRef.current.onEnter();
+          }
           startTimeMs.current = null;
         }, transitionDurationMs);
       }
     },
     // Heads up! It's important that we track our transitionState's shouldBeMounted, and not the
     // one that the user passes in.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [transitionState.shouldBeMounted]
   );
 

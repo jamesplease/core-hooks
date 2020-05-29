@@ -67,3 +67,4 @@ yarn.lock
 dist
 lib
 es
+types

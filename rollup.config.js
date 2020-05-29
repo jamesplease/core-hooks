@@ -1,43 +1,48 @@
+import commonjs from '@rollup/plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
-import replace from 'rollup-plugin-replace';
 import babel from 'rollup-plugin-babel';
+import { uglify } from 'rollup-plugin-uglify';
 import pkg from './package.json';
 
-const env = process.env.NODE_ENV;
+const extensions = ['.ts'];
 
 export default [
+  // browser-friendly UMD build
   {
-    input: 'src/index.js',
+    input: 'src/index.ts',
     output: {
-      name: 'CoreHooks',
+      name: 'coreHooks',
       file: pkg.browser,
       format: 'umd',
-      globals: {
-        react: 'React',
-      },
     },
-    external: ['react'],
     plugins: [
-      resolve({
-        jsnext: true,
-      }),
-      commonjs({}),
+      resolve({ extensions }),
+      commonjs(),
       babel({
-        exclude: 'node_modules/**',
+        extensions,
+        include: ['src/**/*'],
+        exclude: ['node_modules/**'],
       }),
-      replace({
-        'process.env.NODE_ENV': JSON.stringify(env),
-      }),
+      uglify(),
     ],
   },
 
+  // CommonJS (for Node) and ES module (for bundlers) build.
   {
-    input: 'src/index.js',
-    external: ['react'],
+    input: 'src/index.ts',
     output: [
       { file: pkg.main, format: 'cjs' },
       { file: pkg.module, format: 'es' },
+    ],
+    plugins: [
+      resolve({ extensions }),
+      commonjs(),
+
+      babel({
+        extensions,
+        include: ['src/**/*'],
+        exclude: ['node_modules/**'],
+      }),
     ],
   },
 ];

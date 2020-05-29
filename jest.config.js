@@ -1,8 +1,7 @@
-// eslint-disable-next-line no-undef
 module.exports = {
   collectCoverage: true,
-  collectCoverageFrom: ['src/**/*.js', '!**/node_modules/**'],
+  collectCoverageFrom: ['src/**/*.ts', '!**/node_modules/**'],
   coverageDirectory: 'coverage',
   setupFilesAfterEnv: ['./test/setup.js'],
-  testURL: 'http://localhost',
+  testURL: 'http://localhost/',
 };
