@@ -30,7 +30,7 @@ export default function useChange<Value>(
       }
     }
 
-    if (typeof callback === 'function') {
+    if (typeof callback === 'function' && typeof comparator === 'function') {
       if (!comparator(val, previous)) {
         callback(val, previous);
       }
