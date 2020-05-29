@@ -152,7 +152,6 @@ export default function useTransition({
         }
 
         onCallEnterTimeoutRef.current = window.setTimeout(() => {
-          // TODO: Actually call this onEnter callback
           if (typeof optionsRef.current.onEnter === 'function') {
             optionsRef.current.onEnter();
           }
