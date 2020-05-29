@@ -1,7 +1,11 @@
-/* eslint-disable no-console */
-let codeCache = {};
+interface Cache {
+  [Key: string]: boolean;
+}
 
-export function warning(message, code) {
+/* eslint-disable no-console */
+let codeCache: Cache = {};
+
+export function warning(message: string, code: string) {
   // This ensures that each warning type is only logged out one time
   if (code) {
     if (codeCache[code]) {

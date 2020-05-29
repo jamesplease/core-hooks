@@ -1,9 +1,10 @@
-import { renderHook } from 'react-hooks-testing-library';
+import { renderHook } from '@testing-library/react-hooks';
 import { useOnChange } from '../src';
 import { warning } from '../src/warning';
 
 describe('useOnChange()', () => {
   it('warns when an invalid callback is passed', () => {
+    // @ts-ignore
     renderHook(({ value }) => useOnChange(value, true), {
       initialProps: {
         value: 'sandwiches',
@@ -11,10 +12,12 @@ describe('useOnChange()', () => {
     });
 
     expect(warning).toHaveBeenCalledTimes(1);
+    // @ts-ignore
     expect(warning.mock.calls[0][1]).toEqual('useOnChange_invalidCallback');
   });
 
   it('warns when an invalid comparator is passed', () => {
+    // @ts-ignore
     renderHook(({ value }) => useOnChange(value, () => {}, false), {
       initialProps: {
         value: 'sandwiches',
@@ -22,6 +25,7 @@ describe('useOnChange()', () => {
     });
 
     expect(warning).toHaveBeenCalledTimes(1);
+    // @ts-ignore
     expect(warning.mock.calls[0][1]).toEqual('useOnChange_invalidComparator');
   });
 

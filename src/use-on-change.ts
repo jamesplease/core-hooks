@@ -2,11 +2,15 @@ import { useEffect } from 'react';
 import usePrevious from './use-previous';
 import { warning } from './warning';
 
-function isEqual(a, b) {
-  return a === b;
-}
+type ComparatorFn<Value> = (a: Value, b: Value | undefined) => boolean;
 
-export default function useChange(val, callback, comparator = isEqual) {
+const isEqual: ComparatorFn<any> = (a, b) => a === b;
+
+export default function useChange<Value>(
+  val: Value,
+  callback: (currentValue: Value, previousValue: Value | undefined) => void,
+  comparator: ComparatorFn<Value> = isEqual
+): void {
   const previous = usePrevious(val);
 
   useEffect(() => {
@@ -26,7 +30,7 @@ export default function useChange(val, callback, comparator = isEqual) {
       }
     }
 
-    if (typeof callback === 'function') {
+    if (typeof callback === 'function' && typeof comparator === 'function') {
       if (!comparator(val, previous)) {
         callback(val, previous);
       }
