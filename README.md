@@ -1,5 +1,8 @@
 # Core Hooks
 
+[![Travis build status](http://img.shields.io/travis/jamesplease/core-hooks.svg?style=flat)](https://travis-ci.org/jamesplease/core-hooks)
+[![npm version](https://img.shields.io/npm/v/core-hooks.svg)](https://www.npmjs.com/package/core-hooks)
+
 A small collection of commonly-used custom [React Hooks](https://reactjs.org/docs/hooks-intro.html).
 
 ## Motivation
@@ -24,11 +27,11 @@ yarn add core-hooks
 
 ## Hooks
 
-- [useOnChange](#use-on-change)
-- [usePrevious](#use-previous)
-- [useIsMounted](#use-is-mounted)
-- [useCurrentRef](#use-current-ref)
-- [useTransition](#use-transition)
+- [useOnChange](#useonchange-value-callback-comparator-)
+- [usePrevious](#useprevious-value-)
+- [useIsMounted](#useismounted)
+- [useCurrentRef](#usecurrentref-value-)
+- [useMountTransition](#usemounttransition-options-)
 
 ### `useOnChange( value, callback, [comparator] )`
 
@@ -73,7 +76,7 @@ import { useIsMounted } from 'core-hooks';
 const isMounted = useIsMounted();
 ```
 
-### `useCurrentRef(value)`
+### `useCurrentRef( value )`
 
 Returns an up-to-date [ref](https://reactjs.org/docs/hooks-reference.html#useref) of `value`. This
 is useful when you need to access `value` in side effect callbacks in your component, such as
@@ -87,14 +90,25 @@ const [state, setState] = useState();
 const stateRef = useCurrentRef(state);
 ```
 
-### `useTransition({ shouldBeMounted, transitionDurationMs, [onEnteringTimeout] })`
+### `useMountTransition( options )`
 
 A hook that allows you to create transitions between two states. Common use cases are:
 
 - General two-state transitions (such as open and close)
 - Animated mounting/unmounting of a single component
 
-The API was designed with CSS and JS transitions in mind.
+The API was designed with both CSS and JS transitions in mind.
+
+#### `options`
+
+- `shouldBeMounted`: A Boolean representing which state the element is in
+- `transitionDurationMs`: _Optional_. How long the transition between the states lasts
+- `onEnter`: _Optional_. A callback that is called once the enter transition is complete
+- `onLeave`: _Optional_. A callback that is called once the leave transition is complete
+- `onEnteringTimeout`: _Optional_. Pass `true` when using CSS Transitions. This creates a delay between the
+  `shouldMount` and `useActiveClass` booleans being flipped to `true`, so that
+  your mount CSS transition animates properly.
+  If you are not using CSS transitions, then you do not need to pass this option.
 
 The following example demonstrates how you can use this hook for animating a component that
 is being mounted.
@@ -105,14 +119,8 @@ import classnames from 'classnames';
 
 function MyComponent({ renderChildren }) {
   const [shouldMount, useActiveClass] = useTransition({
-    // A Boolean representing which state the transition is in.
     shouldBeMounted: renderChildren,
-    // How long the transition between the states lasts
     transitionDurationMs: 500,
-    // Pass `true` when using CSS Transitions. This creates a delay between the
-    // `shouldMount` and `useActiveClass` booleans being flipped to `true`, so that
-    // your mount CSS transition animates properly.
-    // If you are not using CSS transitions, then you do not need to pass this option.
     onEnteringTimeout: true,
   });
 
