@@ -14,7 +14,11 @@ export default [
       name: 'coreHooks',
       file: pkg.browser,
       format: 'umd',
+      globals: {
+        react: 'React',
+      },
     },
+    external: ['react'],
     plugins: [
       resolve({ extensions }),
       commonjs(),
@@ -34,6 +38,7 @@ export default [
       { file: pkg.main, format: 'cjs' },
       { file: pkg.module, format: 'es' },
     ],
+    external: ['react'],
     plugins: [
       resolve({ extensions }),
       commonjs(),
