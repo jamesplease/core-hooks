@@ -1,7 +1,8 @@
 ### v1.0.0 (2020/5/29)
 
 - Library converted to TypeScript
-- `useTransition` now accepts more options
+- `useMountTransition` now accepts more options
+- Renamed `useTransition` to `useMountTransition`
 
 ### v0.0.4 (2019/5/25)
 

@@ -12,7 +12,7 @@ interface UseTransitionOptions {
   onEnteringTimeout?: number;
 }
 
-export default function useTransition({
+export default function useMountTransition({
   shouldBeMounted,
   transitionDurationMs,
   onEnter,
