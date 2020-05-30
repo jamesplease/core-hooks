@@ -27,11 +27,11 @@ yarn add core-hooks
 
 ## Hooks
 
-- [useOnChange](#use-on-change)
-- [usePrevious](#use-previous)
-- [useIsMounted](#use-is-mounted)
-- [useCurrentRef](#use-current-ref)
-- [useMountTransition](#use-mount-transition)
+- [useOnChange](#useonchange-value-callback-comparator-)
+- [usePrevious](#useprevious-value-)
+- [useIsMounted](#useismounted)
+- [useCurrentRef](#usecurrentref-value-)
+- [useMountTransition](#usemounttransition-options-)
 
 ### `useOnChange( value, callback, [comparator] )`
 
