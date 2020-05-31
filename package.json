@@ -30,7 +30,7 @@
     "dist",
     "lib",
     "es",
-    "types/index.d.ts"
+    "types"
   ],
   "author": "James Smith",
   "license": "MIT",
