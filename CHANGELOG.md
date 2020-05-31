@@ -1,3 +1,7 @@
+### v1.0.1 (2020/5/30)
+
+- Fix exported types
+
 ### v1.0.0 (2020/5/29)
 
 - Library converted to TypeScript
