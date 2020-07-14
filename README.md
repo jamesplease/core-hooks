@@ -130,11 +130,11 @@ The following example demonstrates how you can use this hook for animating a com
 is being mounted.
 
 ```js
-import { useTransition } from 'core-hooks';
+import { useMountTransition } from 'core-hooks';
 import classnames from 'classnames';
 
 function MyComponent({ renderChildren }) {
-  const [shouldMount, useActiveClass] = useTransition({
+  const [shouldMount, useActiveClass] = useMountTransition({
     shouldBeMounted: renderChildren,
     transitionDurationMs: 500,
     onEnteringTimeout: true,
