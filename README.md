@@ -38,7 +38,7 @@ yarn add core-hooks
 ### `useConstant( valueFn )`
 
 A hook that guarantees a constant value. Similar to `useMemo`, except with the guarantee that the
-value will never be purged.
+cached value will never be purged.
 
 Use `useMemo` when your application will not break if the value is recomputed. Use `useConstant` when
 the value must never change.

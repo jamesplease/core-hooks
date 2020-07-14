@@ -1,3 +1,7 @@
+### v1.1.0 (2020/7/14)
+
+- Introduce `useConstant`
+
 ### v1.0.1 (2020/5/30)
 
 - Fix exported types
