@@ -28,11 +28,26 @@ yarn add core-hooks
 
 ## Hooks
 
+- [useConstant](#useconstant-valuefn-)
 - [useOnChange](#useonchange-value-callback-comparator-)
 - [usePrevious](#useprevious-value-)
 - [useIsMounted](#useismounted)
 - [useCurrentRef](#usecurrentref-value-)
 - [useMountTransition](#usemounttransition-options-)
+
+### `useConstant( valueFn )`
+
+A hook that guarantees a constant value. Similar to `useMemo`, except with the guarantee that the
+cached value will never be purged.
+
+Use `useMemo` when your application will not break if the value is recomputed. Use `useConstant` when
+the value must never change.
+
+```js
+import { useConstant } from 'core-hooks';
+
+useConstant(() => createStore());
+```
 
 ### `useOnChange( value, callback, [comparator] )`
 
