@@ -1,3 +1,7 @@
+### v1.2.0 (2021/4/23)
+
+- Add React 17 to peer dependencies
+
 ### v1.1.0 (2020/7/14)
 
 - Introduce `useConstant`
