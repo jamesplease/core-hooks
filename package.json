@@ -39,7 +39,7 @@
   },
   "homepage": "https://github.com/jamesplease/core-hooks#readme",
   "peerDependencies": {
-    "react": "^16.8.0"
+    "react": "^16.8.0 || ^17.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
