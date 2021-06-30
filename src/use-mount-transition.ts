@@ -16,7 +16,7 @@ interface UseTransitionOptions {
 
 export default function useMountTransition({
   shouldBeMounted,
-  transitionDurationMs,
+  transitionDurationMs = 0,
   onEntering,
   onEnter,
   onLeaving,
@@ -109,7 +109,7 @@ export default function useMountTransition({
         if (startTimeMs.current !== null) {
           const endTimeMs = new Date().getTime();
           const elapsedTime = endTimeMs - startTimeMs.current;
-          closeDuration = elapsedTime;
+          closeDuration = Math.min(closeDuration, elapsedTime);
         }
 
         if (typeof optionsRef.current.onLeaving === 'function') {
