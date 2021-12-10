@@ -14,6 +14,13 @@ interface UseTransitionOptions {
   onEnteringTimeout?: number;
 }
 
+enum TransitionState {
+  IDLE = 'IDLE',
+  ENTERING = 'ENTERING',
+  ENTERED = 'ENTERED',
+  LEAVING = 'LEAVING',
+}
+
 export default function useMountTransition({
   shouldBeMounted,
   transitionDurationMs,
@@ -44,8 +51,9 @@ export default function useMountTransition({
   // timeouts.
   const defaultState = {
     shouldBeMounted,
-    shouldRender: shouldBeMounted,
-    useActiveClass: shouldBeMounted,
+    mount: shouldBeMounted,
+    applyActiveClass: shouldBeMounted,
+    mountedState: shouldBeMounted ? TransitionState.ENTERED : TransitionState.IDLE,
   };
 
   const [transitionState, updateTransitionState] = useState(defaultState);
@@ -100,7 +108,12 @@ export default function useMountTransition({
 
   useEffect(
     () => {
-      if (isRendered && !transitionState.shouldBeMounted) {
+      // Ignore the first render
+      if (!isRendered) {
+        return;
+      }
+
+      if (!transitionState.shouldBeMounted) {
         clearTimeout(onEnterTimeoutRef.current);
         clearTimeout(onCallEnterTimeoutRef.current);
 
@@ -118,14 +131,16 @@ export default function useMountTransition({
 
         updateTransitionState(
           mergeNewState({
-            useActiveClass: false,
+            mountedState: TransitionState.LEAVING,
+            applyActiveClass: false,
           })
         );
 
         onExitTimeoutRef.current = window.setTimeout(() => {
           updateTransitionState(
             mergeNewState({
-              shouldRender: false,
+            mountedState: TransitionState.IDLE,
+            mount: false,
             })
           );
 
@@ -139,7 +154,7 @@ export default function useMountTransition({
         if (typeof enterTimeoutToUse === 'number' && enterTimeoutToUse > 0) {
           updateTransitionState(
             mergeNewState({
-              shouldRender: true,
+            mount: true,
             })
           );
 
@@ -150,7 +165,8 @@ export default function useMountTransition({
 
             updateTransitionState(
               mergeNewState({
-                useActiveClass: true,
+                mountedState: TransitionState.ENTERING,
+                applyActiveClass: true,
               })
             );
 
@@ -163,8 +179,9 @@ export default function useMountTransition({
 
           updateTransitionState(
             mergeNewState({
-              shouldRender: true,
-              useActiveClass: true,
+                mountedState: TransitionState.ENTERING,
+                mount: true,
+              applyActiveClass: true,
             })
           );
         }
@@ -173,6 +190,13 @@ export default function useMountTransition({
           if (typeof optionsRef.current.onEnter === 'function') {
             optionsRef.current.onEnter();
           }
+
+          updateTransitionState(
+            mergeNewState({
+              mountedState: TransitionState.ENTERED,
+            })
+          );
+
           startTimeMs.current = null;
         }, transitionDurationMs);
       }
@@ -183,5 +207,9 @@ export default function useMountTransition({
     [transitionState.shouldBeMounted]
   );
 
-  return [transitionState.shouldRender, transitionState.useActiveClass];
+  return {
+    mount: transitionState.mount,
+    applyActiveClass: transitionState.applyActiveClass,
+    mountedState: transitionState.mountedState,
+  };
 }
