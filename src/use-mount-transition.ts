@@ -7,7 +7,9 @@ const RENDER_TIMEOUT = 35;
 interface UseTransitionOptions {
   shouldBeMounted: boolean;
   transitionDurationMs?: number;
+  onEntering?: () => void;
   onEnter?: () => void;
+  onLeaving?: () => void;
   onLeave?: () => void;
   onEnteringTimeout?: number;
 }
@@ -15,7 +17,9 @@ interface UseTransitionOptions {
 export default function useMountTransition({
   shouldBeMounted,
   transitionDurationMs,
+  onEntering,
   onEnter,
+  onLeaving,
   onLeave,
 
   onEnteringTimeout = RENDER_TIMEOUT,
@@ -28,7 +32,9 @@ export default function useMountTransition({
   }
 
   const optionsRef = useCurrentRef({
+    onEntering,
     onEnter,
+    onLeaving,
     onLeave,
   });
 
@@ -106,6 +112,10 @@ export default function useMountTransition({
           closeDuration = elapsedTime;
         }
 
+        if (typeof optionsRef.current.onLeaving === 'function') {
+          optionsRef.current.onLeaving();
+        }
+
         updateTransitionState(
           mergeNewState({
             useActiveClass: false,
@@ -134,6 +144,10 @@ export default function useMountTransition({
           );
 
           onEnterTimeoutRef.current = window.setTimeout(() => {
+            if (typeof optionsRef.current.onEntering === 'function') {
+              optionsRef.current.onEntering();
+            }
+
             updateTransitionState(
               mergeNewState({
                 useActiveClass: true,
@@ -143,6 +157,10 @@ export default function useMountTransition({
             startTimeMs.current = new Date().getTime();
           }, enterTimeoutToUse);
         } else {
+          if (typeof optionsRef.current.onEntering === 'function') {
+            optionsRef.current.onEntering();
+          }
+
           updateTransitionState(
             mergeNewState({
               shouldRender: true,

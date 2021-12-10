@@ -68,7 +68,7 @@ describe('useOnChange()', () => {
   it('supports a custom comparator', () => {
     const myMock = jest.fn();
 
-    function comparator(a = {}, b = {}) {
+    function comparator(a:any = {}, b:any = {}) {
       return a.id === b.id;
     }
 
