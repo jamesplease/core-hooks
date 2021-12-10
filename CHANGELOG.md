@@ -1,3 +1,11 @@
+### v2.0.0 (2021/12/10)
+
+- Improved (breaking) API changes for `useMountTransition`
+  - New callbacks: `onEntering` and `onLeaving`
+  - The returned value is now an object, and not an an array
+  - The returned value now includes `mountedState`, which represents the current state of the
+    transition.
+
 ### v1.2.0 (2021/4/23)
 
 - Add React 17 to peer dependencies
