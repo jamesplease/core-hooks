@@ -51,9 +51,9 @@ export default function useMountTransition({
   // timeouts.
   const defaultState = {
     shouldBeMounted,
-    shouldRender: shouldBeMounted,
-    useActiveClass: shouldBeMounted,
-    transitionState: shouldBeMounted ? TransitionState.ENTERED : TransitionState.IDLE,
+    mount: shouldBeMounted,
+    applyActiveClass: shouldBeMounted,
+    mountedState: shouldBeMounted ? TransitionState.ENTERED : TransitionState.IDLE,
   };
 
   const [transitionState, updateTransitionState] = useState(defaultState);
@@ -131,16 +131,16 @@ export default function useMountTransition({
 
         updateTransitionState(
           mergeNewState({
-            transitionState: TransitionState.LEAVING,
-            useActiveClass: false,
+            mountedState: TransitionState.LEAVING,
+            applyActiveClass: false,
           })
         );
 
         onExitTimeoutRef.current = window.setTimeout(() => {
           updateTransitionState(
             mergeNewState({
-            transitionState: TransitionState.IDLE,
-            shouldRender: false,
+            mountedState: TransitionState.IDLE,
+            mount: false,
             })
           );
 
@@ -154,7 +154,7 @@ export default function useMountTransition({
         if (typeof enterTimeoutToUse === 'number' && enterTimeoutToUse > 0) {
           updateTransitionState(
             mergeNewState({
-            shouldRender: true,
+            mount: true,
             })
           );
 
@@ -165,8 +165,8 @@ export default function useMountTransition({
 
             updateTransitionState(
               mergeNewState({
-                transitionState: TransitionState.ENTERING,
-                useActiveClass: true,
+                mountedState: TransitionState.ENTERING,
+                applyActiveClass: true,
               })
             );
 
@@ -179,9 +179,9 @@ export default function useMountTransition({
 
           updateTransitionState(
             mergeNewState({
-                transitionState: TransitionState.ENTERING,
-                shouldRender: true,
-              useActiveClass: true,
+                mountedState: TransitionState.ENTERING,
+                mount: true,
+              applyActiveClass: true,
             })
           );
         }
@@ -193,7 +193,7 @@ export default function useMountTransition({
 
           updateTransitionState(
             mergeNewState({
-              transitionState: TransitionState.ENTERED,
+              mountedState: TransitionState.ENTERED,
             })
           );
 
@@ -208,8 +208,8 @@ export default function useMountTransition({
   );
 
   return {
-    mount: transitionState.shouldRender,
-    applyActiveClass: transitionState.useActiveClass,
-    mountedState: transitionState.transitionState,
+    mount: transitionState.mount,
+    applyActiveClass: transitionState.applyActiveClass,
+    mountedState: transitionState.mountedState,
   };
 }
