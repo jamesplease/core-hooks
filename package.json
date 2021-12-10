@@ -1,70 +1,63 @@
 {
   "name": "core-hooks",
   "version": "1.2.0",
-  "description": "A collection of commonly-used custom React Hooks.",
-  "main": "lib/index.js",
-  "module": "es/index.js",
-  "browser": "dist/index.js",
-  "types": "types/index.d.ts",
+  "license": "MIT",
+  "author": "James Please",
+  "main": "dist/index.js",
+  "module": "dist/core-hooks.esm.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
-    "clean": "rimraf dist es tmp lib types",
-    "test": "NODE_ENV=test jest",
-    "test:watch": "jest --watch",
-    "prepublishOnly": "npm run build",
-    "type-check": "tsc --noEmit",
-    "type-check:watch": "npm run type-check -- --watch",
-    "build:types": "tsc --emitDeclarationOnly",
-    "build:js": "rollup -c",
-    "build": "npm run clean && npm run build:types && npm run build:js"
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --passWithNoTests --setupFilesAfterEnv ./test/setup.ts",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jamesplease/core-hooks.git"
   },
+  "bugs": {
+    "url": "https://github.com/jamesplease/core-hooks/issues"
+  },
+  "homepage": "https://github.com/jamesplease/core-hooks#readme",
   "keywords": [
     "react",
     "hooks",
     "hook"
   ],
-  "files": [
-    "dist",
-    "lib",
-    "es",
-    "types"
+  "size-limit": [
+    {
+      "path": "dist/core-hooks.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/core-hooks.esm.js",
+      "limit": "10 KB"
+    }
   ],
-  "author": "James Smith",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/jamesplease/core-hooks/issues"
-  },
-  "homepage": "https://github.com/jamesplease/core-hooks#readme",
   "peerDependencies": {
-    "react": "^16.8.0 || ^17.0.0"
+    "react": ">=16"
   },
   "devDependencies": {
-    "@babel/core": "^7.2.2",
-    "@babel/preset-env": "^7.2.3",
-    "@babel/preset-typescript": "^7.9.0",
-    "@rollup/plugin-commonjs": "^11.0.2",
-    "@rollup/plugin-replace": "^2.3.1",
-    "@rollup/plugin-typescript": "^4.0.0",
-    "@testing-library/react-hooks": "^3.2.1",
-    "@types/jest": "^25.2.3",
-    "@types/react": "^16.9.35",
-    "babel-jest": "^24.9.0",
-    "coveralls": "^3.0.11",
-    "cross-env": "^5.1.3",
-    "fetch-mock": "^6.0.0",
-    "isomorphic-fetch": "^2.2.1",
-    "jest": "^24.9.0",
-    "react": "^16.13.1",
-    "react-test-renderer": "^16.13.1",
-    "rimraf": "^2.7.1",
-    "rollup": "^2.2.0",
-    "rollup-plugin-babel": "^4.4.0",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-uglify": "^6.0.4",
-    "typescript": "^3.8.3"
+    "@size-limit/preset-small-lib": "^7.0.3",
+    "@testing-library/react-hooks": "^7.0.2",
+    "@types/react": "^17.0.37",
+    "@types/react-dom": "^17.0.11",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "size-limit": "^7.0.4",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.3.1",
+    "typescript": "^4.5.3"
   }
 }

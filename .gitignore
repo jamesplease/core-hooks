@@ -64,7 +64,9 @@ package-lock.json
 package-lock.json.*
 yarn.lock
 
+# tsdx
+*.log
+.DS_Store
+node_modules
+.cache
 dist
-lib
-es
-types
