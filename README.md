@@ -122,7 +122,7 @@ The API was designed with both CSS and JS transitions in mind.
 - `onEnter`: _Optional_. A callback that is called once the enter transition is complete
 - `onLeave`: _Optional_. A callback that is called once the leave transition is complete
 - `onEnteringTimeout`: _Optional_. Pass `true` when using CSS Transitions. This creates a delay between the
-  `shouldMount` and `useActiveClass` booleans being flipped to `true`, so that
+  `mount` and `applyActiveClass` booleans being flipped to `true`, so that
   your mount CSS transition animates properly.
   If you are not using CSS transitions, then you do not need to pass this option.
 
@@ -134,7 +134,7 @@ import { useMountTransition } from 'core-hooks';
 import classnames from 'classnames';
 
 function MyComponent({ renderChildren }) {
-  const [shouldMount, useActiveClass] = useMountTransition({
+  const { mount, applyActiveClass } = useMountTransition({
     shouldBeMounted: renderChildren,
     transitionDurationMs: 500,
     onEnteringTimeout: true,
@@ -142,10 +142,10 @@ function MyComponent({ renderChildren }) {
 
   return (
     <>
-      {shouldMount && (
+      {mount && (
         <div
           className={classnames('myDiv', {
-            'myDiv-active': useActiveClass,
+            'myDiv-active': applyActiveClass,
           })}>
           This div animates in and out
         </div>
