@@ -32,7 +32,7 @@ yarn add core-hooks
 - [useOnChange](#useonchange-value-callback-comparator-)
 - [usePrevious](#useprevious-value-)
 - [useIsMounted](#useismounted)
-- [useCurrentRef](#usecurrentref-value-)
+- [useLatestRef](#uselatestref-value-)
 - [useMountTransition](#usemounttransition-options-)
 
 ### `useConstant( valueFn )`
@@ -92,7 +92,7 @@ import { useIsMounted } from 'core-hooks';
 const isMounted = useIsMounted();
 ```
 
-### `useCurrentRef( value )`
+### `useLatestRef( value )`
 
 Returns an up-to-date [ref](https://reactjs.org/docs/hooks-reference.html#useref) of `value`. This
 is useful when you need to access `value` in side effect callbacks in your component, such as
@@ -100,10 +100,10 @@ is useful when you need to access `value` in side effect callbacks in your compo
 
 ```js
 import { useState } from 'react';
-import { useCurrentRef } from 'core-hooks';
+import { useLatestRef } from 'core-hooks';
 
 const [state, setState] = useState();
-const stateRef = useCurrentRef(state);
+const stateRef = useLatestRef(state);
 ```
 
 ### `useMountTransition( options )`
