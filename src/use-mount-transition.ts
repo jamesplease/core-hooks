@@ -11,7 +11,7 @@ interface UseTransitionOptions {
   onEnter?: () => void;
   onLeaving?: () => void;
   onLeave?: () => void;
-  onEnteringTimeout?: number;
+  onEnteringTimeout?: number | boolean;
 }
 
 enum TransitionState {
