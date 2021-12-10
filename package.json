@@ -35,27 +35,15 @@
     "hooks",
     "hook"
   ],
-  "size-limit": [
-    {
-      "path": "dist/core-hooks.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/core-hooks.esm.js",
-      "limit": "10 KB"
-    }
-  ],
   "peerDependencies": {
     "react": ">=16"
   },
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^7.0.3",
     "@testing-library/react-hooks": "^7.0.2",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "size-limit": "^7.0.4",
     "tsdx": "^0.14.1",
     "tslib": "^2.3.1",
     "typescript": "^4.5.3"
