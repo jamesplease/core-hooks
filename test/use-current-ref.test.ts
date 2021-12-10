@@ -1,10 +1,10 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { useCurrentRef } from '../src';
+import { useLatestRef } from '../src';
 
-describe('useCurrentRef()', () => {
+describe('useLatestRef()', () => {
   it('should return a ref that remains up-to-date', () => {
     const { result, rerender } = renderHook(
-      ({ value }) => useCurrentRef(value),
+      ({ value }) => useLatestRef(value),
       {
         initialProps: {
           value: 'sandwiches',

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import useCurrentRef from './use-current-ref';
+import useLatestRef from './use-latest-ref';
 import useIsMounted from './use-is-mounted';
 
 const RENDER_TIMEOUT = 35;
@@ -38,7 +38,7 @@ export default function useMountTransition({
     enterTimeoutToUse = Boolean(onEnteringTimeout) ? RENDER_TIMEOUT : 0;
   }
 
-  const optionsRef = useCurrentRef({
+  const optionsRef = useLatestRef({
     onEntering,
     onEnter,
     onLeaving,
