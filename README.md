@@ -119,7 +119,9 @@ The API was designed with both CSS and JS transitions in mind.
 
 - `shouldBeMounted`: A Boolean representing which state the element is in
 - `transitionDurationMs`: _Optional_. How long the transition between the states lasts
+- `onEntering`: _Optional_. A callback that is called once the enter transition begins
 - `onEnter`: _Optional_. A callback that is called once the enter transition is complete
+- `onLeaving`: _Optional_. A callback that is called once the leave transition begins
 - `onLeave`: _Optional_. A callback that is called once the leave transition is complete
 - `onEnteringTimeout`: _Optional_. Pass `true` when using CSS Transitions. This creates a delay between the
   `mount` and `applyActiveClass` booleans being flipped to `true`, so that
