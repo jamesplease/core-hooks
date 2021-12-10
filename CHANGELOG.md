@@ -1,5 +1,6 @@
 ### v2.0.0 (2021/12/10)
 
+- `useCurrentRef` has been renamed to `useLatestRef`
 - Improved (breaking) API changes for `useMountTransition`
   - New callbacks: `onEntering` and `onLeaving`
   - The returned value is now an object, and not an an array
