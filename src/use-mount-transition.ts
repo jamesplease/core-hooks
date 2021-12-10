@@ -14,6 +14,13 @@ interface UseTransitionOptions {
   onEnteringTimeout?: number;
 }
 
+enum TransitionState {
+  ENTERING = 'ENTERING',
+  ENTERED = 'ENTERED',
+  LEAVING = 'LEAVING',
+  IDLE = 'IDLE',
+}
+
 export default function useMountTransition({
   shouldBeMounted,
   transitionDurationMs,
@@ -46,6 +53,7 @@ export default function useMountTransition({
     shouldBeMounted,
     shouldRender: shouldBeMounted,
     useActiveClass: shouldBeMounted,
+    transitionState: shouldBeMounted ? TransitionState.ENTERED : TransitionState.IDLE,
   };
 
   const [transitionState, updateTransitionState] = useState(defaultState);
@@ -118,6 +126,7 @@ export default function useMountTransition({
 
         updateTransitionState(
           mergeNewState({
+            transitionState: TransitionState.LEAVING,
             useActiveClass: false,
           })
         );
@@ -125,7 +134,8 @@ export default function useMountTransition({
         onExitTimeoutRef.current = window.setTimeout(() => {
           updateTransitionState(
             mergeNewState({
-              shouldRender: false,
+            transitionState: TransitionState.IDLE,
+            shouldRender: false,
             })
           );
 
@@ -139,7 +149,7 @@ export default function useMountTransition({
         if (typeof enterTimeoutToUse === 'number' && enterTimeoutToUse > 0) {
           updateTransitionState(
             mergeNewState({
-              shouldRender: true,
+            shouldRender: true,
             })
           );
 
@@ -150,6 +160,7 @@ export default function useMountTransition({
 
             updateTransitionState(
               mergeNewState({
+                transitionState: TransitionState.ENTERING,
                 useActiveClass: true,
               })
             );
@@ -163,7 +174,8 @@ export default function useMountTransition({
 
           updateTransitionState(
             mergeNewState({
-              shouldRender: true,
+                transitionState: TransitionState.ENTERING,
+                shouldRender: true,
               useActiveClass: true,
             })
           );
@@ -173,6 +185,13 @@ export default function useMountTransition({
           if (typeof optionsRef.current.onEnter === 'function') {
             optionsRef.current.onEnter();
           }
+
+          updateTransitionState(
+            mergeNewState({
+              transitionState: TransitionState.ENTERED,
+            })
+          );
+
           startTimeMs.current = null;
         }, transitionDurationMs);
       }
