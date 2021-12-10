@@ -134,7 +134,7 @@ import { useMountTransition } from 'core-hooks';
 import classnames from 'classnames';
 
 function MyComponent({ renderChildren }) {
-  const { mount, applyActiveClass } = useMountTransition({
+  const { mount, applyActiveClass, mountedState } = useMountTransition({
     shouldBeMounted: renderChildren,
     transitionDurationMs: 500,
     onEnteringTimeout: true,
@@ -147,7 +147,7 @@ function MyComponent({ renderChildren }) {
           className={classnames('myDiv', {
             'myDiv-active': applyActiveClass,
           })}>
-          This div animates in and out
+          This div animates in and out. The current state is {mountedState}.
         </div>
       )}
     </>
