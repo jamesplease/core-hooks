@@ -15,10 +15,10 @@ interface UseTransitionOptions {
 }
 
 enum TransitionState {
+  IDLE = 'IDLE',
   ENTERING = 'ENTERING',
   ENTERED = 'ENTERED',
   LEAVING = 'LEAVING',
-  IDLE = 'IDLE',
 }
 
 export default function useMountTransition({
@@ -108,7 +108,12 @@ export default function useMountTransition({
 
   useEffect(
     () => {
-      if (isRendered && !transitionState.shouldBeMounted) {
+      // Ignore the first render
+      if (!isRendered) {
+        return;
+      }
+
+      if (!transitionState.shouldBeMounted) {
         clearTimeout(onEnterTimeoutRef.current);
         clearTimeout(onCallEnterTimeoutRef.current);
 
@@ -202,5 +207,9 @@ export default function useMountTransition({
     [transitionState.shouldBeMounted]
   );
 
-  return [transitionState.shouldRender, transitionState.useActiveClass];
+  return {
+    mount: transitionState.shouldRender,
+    applyActiveClass: transitionState.useActiveClass,
+    mountedState: transitionState.transitionState,
+  };
 }
