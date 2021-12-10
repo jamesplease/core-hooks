@@ -2,7 +2,7 @@
 
 [![Travis build status](http://img.shields.io/travis/jamesplease/core-hooks.svg?style=flat)](https://travis-ci.org/jamesplease/core-hooks)
 [![npm version](https://img.shields.io/npm/v/core-hooks.svg)](https://www.npmjs.com/package/core-hooks)
-[![gzip size](http://img.badgesize.io/https://unpkg.com/core-hooks/lib/index.js?compression=gzip)](https://unpkg.com/core-hooks/lib/index.js)
+[![gzip size](http://img.badgesize.io/https://unpkg.com/core-hooks/dist/core-hooks.cjs.production.min.js?compression=gzip)](https://unpkg.com/core-hooks/dist/core-hooks.cjs.production.min.js)
 
 A small collection of commonly-used custom [React Hooks](https://reactjs.org/docs/hooks-intro.html).
 
